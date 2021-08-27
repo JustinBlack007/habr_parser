@@ -6,8 +6,13 @@ from bs4 import BeautifulSoup
 search_query = input("Введите запрос: ")
 
 def search_posts(text_of_query):
-    payload = {"q": search_query, "target_type": "posts", "order": "relevance"}
-    html = requests.get("https://habr.com/ru/search/", params=payload);
+    html = None
+    if text_of_query == "":
+        html = requests.get("https://habr.com/ru/all")
+    else:
+        payload = {"q": text_of_query, "target_type": "posts", "order": "relevance"}
+        html = requests.get("https://habr.com/ru/search/", params=payload);
+    
     parsered_html = BeautifulSoup(html.text, "html.parser")
 
 
